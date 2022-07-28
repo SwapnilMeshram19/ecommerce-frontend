@@ -1,0 +1,35 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+
+.flex_between{
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating-card{
+  width: 36px;
+  background-color: rgb(12, 143, 29);
+  color:rgb(255, 255, 255);
+  padding:8px;
+  border-radius: 5px;
+  font-weight: 700;
+  display: flex;
+  gap:5px;
+  align-items: center;
+}
+
+.price{
+  background-color: skyblue;
+  color: green;
+  padding: 8px;
+  border-radius: 5px ;
+  font-weight: 700;
+
+}
