@@ -5,13 +5,13 @@ import { useFetchProducts } from "../hook/fetchProducts";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
-export const Home = () => {
+export const Grocery = () => {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState(null);
   const [rating, setRating]=useState(null);
   const [ratingFilter, setRatingFilter]=useState([]);
   const { loading, error, data } = useFetchProducts(
-    "https://ecommerce-json.herokuapp.com/products",
+    "https://ecommerce-json.herokuapp.com/products?category_like=grocery",
     page,
     sort,
     ratingFilter
