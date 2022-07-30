@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Private } from "../components/Private";
 import { Grocery } from "./Grocery";
@@ -6,9 +6,16 @@ import { Home } from "./Home";
 import { IndividualProduct } from "./IndividuaProduct";
 import { Login } from "./Login";
 import { Pharmacy } from "./Pharmacy";
-
-
+import { useDispatch } from "react-redux/es/exports";
+import { errorInCart, getCart, getUserCart, loadingCart } from "../store/cart/action";
+import axios from "axios"
 export const Pages= ()=>{
+
+    const dispatch=useDispatch();
+    
+    useEffect(()=>{
+        dispatch(getUserCart());
+    },[])
     return(
         <div>
             <Routes>

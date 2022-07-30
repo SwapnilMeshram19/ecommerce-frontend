@@ -10,10 +10,42 @@ import { Box} from '@mui/material';
 import {Link} from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { addInCart, addTOCart, changeCartCount, delCartProduct, delItemFromCart, errorInCart, loadingCart } from '../store/cart/action';
+import { getProductCount } from '../utilities/cartCount';
 export const IndividualProduct =()=>{
     const [productDetails,setProductDetails]=useState({});
     const {imageBase,hex,title,color,price,rating}=productDetails;
     const {id}=useParams();
+    const cart=useSelector(state=>state.cart.cart)
+    const dispatch=useDispatch();
+    const isItemInCart=()=>{
+      const el=cart.find(el=>+el?.id===+id)
+      return !!el;
+    }
+
+const handleAddToCart=()=>{
+  dispatch(addInCart(productDetails));
+}
+
+// const getProductCount=()=>{
+//   return cart.find(el=>+el?.id===+id)?.count||0;
+// }
+
+
+const handleCountChange=(num)=>{
+  dispatch(changeCartCount(productDetails,num))
+
+}
+
+const handleDeleteCart=(num)=>{
+  const myCount=getProductCount(cart, id);
+  if(+myCount===1){
+    dispatch(delCartProduct(productDetails))
+  }else{
+    handleCountChange(-1);
+  }
+}
 
     useEffect(()=>{
         axios({
@@ -49,11 +81,15 @@ export const IndividualProduct =()=>{
         </Box>
       </CardContent>
       <CardActions>
-        <Link to={`/product/${id}`}>
-        <Button size="small">View</Button>        
-        </Link>
-        <Button size="small">ADD TO CART</Button>
+       
+       {!isItemInCart()&& <Button onClick={handleAddToCart} size="small">ADD TO CART</Button>}
       </CardActions>
+      {isItemInCart() &&
+      <Box>
+      <Button color="success"size="small" variant="contained" onClick={()=>(handleCountChange(+1))}>+</Button>
+      <Button color ="success"size="small" variant="contained">{getProductCount(cart,id)}</Button>
+      <Button color="error" size="small" variant="contained"onClick={()=>(handleDeleteCart(-1))}>-</Button>
+      </Box>}
     </Card>
     )
     
